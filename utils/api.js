@@ -1,23 +1,36 @@
-import { AsyncStorage } from 'react-native'
-import { formatCalendarResults, CALENDAR_STORAGE_KEY } from './_calendar'
+import { AsyncStorage } from "react-native";
+import { data, DECKS_STORAGE_KEY } from "./data";
 
-export function fetchCalendarResults () {
-  return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-    .then(formatCalendarResults)
+export function saveIntialDataToStoarge() {
+  return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
 }
 
-export function submitEntry ({ entry, key }) {
-  return AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
-    [key]: entry
-  }))
+export function getDecks() {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY);
 }
 
-export function removeEntry (key) {
-  return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-    .then((results) => {
-      const data = JSON.parse(results)
-      data[key] = undefined
-      delete data[key]
-      AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data))
+export function getDeck({ id }) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((results) => {
+    const res = JSON.parse(results);
+    return res[id];
+  });
+}
+
+export function saveDeckTitle({ title }) {
+  return AsyncStorage.mergeItem(
+    DECKS_STORAGE_KEY,
+    JSON.stringify({
+      [title]: {
+        title: title,
+      },
     })
+  );
+}
+
+export function addCardToDeck({ title, card }) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then((results) => {
+    const res = JSON.parse(results);
+    res[title].questions.push(card);
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(res));
+  });
 }
