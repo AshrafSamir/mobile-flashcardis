@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import * as Constants from "expo-constants";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import { connect } from "react-redux";
-import { purple } from "../utils/colors";
+import { purple, white, gray } from "../utils/colors";
 import { addDecks } from "../actions/decks";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 class AddDeck extends Component {
   state = {
     deckName: {},
+    title: "",
   };
   handleInput = (e) => {
     let text = e.target.value;
@@ -18,70 +20,80 @@ class AddDeck extends Component {
     };
     this.setState({
       deckName: obj,
+      title: text,
     });
-    text = "";
-    obj = {};
+
   };
   handleSubmit = () => {
-    const { dispatch } = this.props;
-    const { deckName } = this.state;
+    const { dispatch, navigation } = this.props;
+    const { deckName, title } = this.state;
+    
     dispatch(addDecks(deckName));
+    navigation.navigate("DeckDetails", {
+      title: title,
+      number: 0,
+    });
+    this.setState({
+      deckName: {},
+      title: "",
+    });
   };
   render() {
+    const {title} = this.state
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.text}>What is the title of your new deck</Text>
-        </View>
+        <Text style={styles.title}>Add Deck</Text>
+        <View style={styles.separator} />
 
-        <View style={styles.textSection}>
-          <TextInput
-            onChange={this.handleInput}
-            placeholder="Deck Title"
-            style={styles.inputText}
-          />
-        </View>
+        <TextInput
+          style={styles.textInput}
+          onChange={this.handleInput}
+          placeholder={"Deck Title"}
+        />
+        <View style={styles.separator} />
 
-        <View style={styles.buttonSection}>
-          <Button
-            onPress={this.handleSubmit}
-            style={styles.button}
-            title="Submit"
-          />
-        </View>
+        <TouchableOpacity
+          style={styles.add}
+          onPress={title !== "" ? this.handleSubmit: null}
+          keyboardShouldPersistTaps={"handled"}
+        >
+          <Text style={styles.buttonText}>Add Deck</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  textSection: {
-    width: "100%",
-    height: "30%",
+  textInput: {
+    height: 40,
+    borderColor: gray,
+    borderWidth: 1,
   },
-  buttonSection: {
-    width: "100%",
-    height: "30%",
-    justifyContent: "center",
+  add: {
+    backgroundColor: purple,
+    padding: 10,
     alignItems: "center",
   },
-  inputText: {
-    marginLeft: "20%",
-    width: "60%",
-  },
-  button: {
-    backgroundColor: purple,
-    color: "white",
+  buttonText: {
+    color: white,
   },
   container: {
-    width: "100%",
-    height: "30%",
+    flex: 1,
+    marginTop: Constants.statusBarHeight,
     justifyContent: "center",
-    alignItems: "center",
+    padding: 50,
   },
-  text: {
+  title: {
     fontSize: 30,
-    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 8,
+    color: gray,
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: gray,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
 

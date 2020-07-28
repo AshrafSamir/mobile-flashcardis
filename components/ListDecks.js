@@ -29,6 +29,7 @@ class ListDecks extends Component {
           <DeckLink
             key={key}
             deck={key}
+            navigation={this.props.navigation}
             cardNumber={
               decks[key].questions !== undefined
                 ? decks[key].questions.length
