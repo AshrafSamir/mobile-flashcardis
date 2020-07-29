@@ -3,6 +3,7 @@ import * as Constants from "expo-constants";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { connect } from "react-redux";
 import { purple, white, gray } from "../utils/colors";
+import { saveDeckTitle } from "../utils/api";
 import { addDecks } from "../actions/decks";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -12,49 +13,54 @@ class AddDeck extends Component {
     title: "",
   };
   handleInput = (e) => {
-    let text = e.target.value;
-    let obj = {
+    const text = e.target.value;
+    const obj = {
       [text]: {
         title: text,
+        questions: [],
       },
     };
     this.setState({
       deckName: obj,
       title: text,
     });
-
   };
   handleSubmit = () => {
     const { dispatch, navigation } = this.props;
     const { deckName, title } = this.state;
-    
-    dispatch(addDecks(deckName));
+
+    saveDeckTitle({ title }).then(() => {
+      dispatch(addDecks(deckName));
+    });
+
     navigation.navigate("DeckDetails", {
       title: title,
       number: 0,
     });
+
     this.setState({
       deckName: {},
       title: "",
     });
   };
   render() {
-    const {title} = this.state
+    const { title } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Add Deck</Text>
         <View style={styles.separator} />
 
         <TextInput
+          value={title}
           style={styles.textInput}
           onChange={this.handleInput}
-          placeholder={"Deck Title"}
+          placeholder={"    Deck Title"}
         />
         <View style={styles.separator} />
 
         <TouchableOpacity
           style={styles.add}
-          onPress={title !== "" ? this.handleSubmit: null}
+          onPress={title !== "" ? this.handleSubmit : null}
           keyboardShouldPersistTaps={"handled"}
         >
           <Text style={styles.buttonText}>Add Deck</Text>

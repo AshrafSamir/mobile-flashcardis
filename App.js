@@ -1,19 +1,27 @@
 import React, { Component } from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { StyleSheet, Text, View, Platform } from "react-native";
-import AddDeck from "./components/AddDeck";
-import ListDecks from "./components/ListDecks";
+import { View, StatusBar } from "react-native";
 import reducer from "./reducers";
-import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { purple, white } from "./utils/colors";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { purple } from "./utils/colors";
 import { saveIntialDataToStoarge } from "./utils/api";
 import middleware from "./middleware";
-import Tab from "./components/Tab";
+import * as Constants from "expo-constants";
+import StackNav from "./components/StackNav";
 
+function UdaciStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View
+      style={{
+        backgroundColor,
+        height: Constants.statusBarHeight,
+        marginBottom: 15,
+      }}
+    >
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  );
+}
 
 export default class App extends Component {
   componentDidMount() {
@@ -23,7 +31,8 @@ export default class App extends Component {
     return (
       <Provider store={createStore(reducer, middleware)}>
         <View style={{ flex: 1 }}>
-          <Tab />
+          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
+          <StackNav />
         </View>
       </Provider>
     );

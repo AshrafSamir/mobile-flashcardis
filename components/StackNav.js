@@ -4,22 +4,29 @@ import { createStackNavigator } from "@react-navigation/stack";
 import DeckDetails from "./DeckDetails";
 import DeckLink from "./DeckLink";
 import AddDeck from "./AddDeck";
-import ListDecks from "./ListDecks";
+import Tab from "./Tab";
+import NewQuestion from "./NewQuestion";
 
 const Stack = createStackNavigator();
 
 function StackNav() {
   return (
-    <Stack.Navigator initialRouteName="ListDecks" headerMode="screen">
-      <Stack.Screen
-        options={{ headerShown: false }}
-        name="ListDecks"
-        component={ListDecks}
-      />
-      <Stack.Screen name="DeckDetails" component={DeckDetails} />
-      <Stack.Screen name="DeckLink" component={DeckLink} />
-      <Stack.Screen name="AddDeck" component={AddDeck} />
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator  initialRouteName="Tab" headerMode="screen">
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Tab"
+          component={Tab}
+        />
+        <Stack.Screen name="NewQuestion" component={NewQuestion} />
+        <Stack.Screen name="AddDeck" component={AddDeck} />
+        <Stack.Screen name="DeckLink" component={DeckLink} />
+        <Stack.Screen name="DeckDetails" component={DeckDetails} />
+        
+      
+        
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

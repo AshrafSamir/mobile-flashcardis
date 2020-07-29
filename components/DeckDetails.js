@@ -6,14 +6,21 @@ import { purple, white, gray } from "../utils/colors";
 
 class DeckDetails extends Component {
   render() {
-    const { route } = this.props;
-    const {title, number} = route.params
+    const { route, navigation } = this.props;
+    const { title, number } = route.params;
 
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.count}>{number} Cards</Text>
-        <TouchableOpacity style={styles.add}>
+
+        <TouchableOpacity
+          onPress={()=>{navigation.navigate("NewQuestion", {
+            title: title,
+            number: number,
+          })}}
+          style={styles.add}
+        >
           <Text style={styles.buttonText}>Add Question</Text>
         </TouchableOpacity>
 
@@ -39,17 +46,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    textAlign: 'center',
+    textAlign: "center",
     fontWeight: "bold",
     marginVertical: 8,
     color: gray,
-
-},
-count: {
+  },
+  count: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     marginVertical: 8,
-},
+  },
   add: {
     width: "100%",
     backgroundColor: purple,
@@ -63,7 +69,7 @@ count: {
   },
   start: {
     width: "100%",
-    
+
     backgroundColor: purple,
     padding: 10,
     alignItems: "center",

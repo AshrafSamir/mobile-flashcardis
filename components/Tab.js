@@ -1,23 +1,22 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AddDeck from "./AddDeck";
 import ListDecks from "./ListDecks";
-import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { purple, white } from "../utils/colors";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { saveIntialDataToStoarge } from "../utils/api";
-import StackNav from "./StackNav";
+
 
 const RouteConfigs = {
-  StackNav: {
+  ListDecks: {
     name: "Decks List",
-    component: StackNav,
+    component: ListDecks,
     options: {
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-bookmarks" size={30} color={tintColor} />
       ),
-      title: "Decks List",
+      title: "DECKS",
     },
   },
   AddDeck: {
@@ -60,14 +59,12 @@ export default class Tab extends Component {
   }
   render() {
     return (
-      <NavigationContainer>
-        <View style={{ flex: 1 }}>
-          <Tabs.Navigator {...TabNavigatorConfig}>
-            <Tabs.Screen {...RouteConfigs["StackNav"]} />
-            <Tabs.Screen {...RouteConfigs["AddDeck"]} />
-          </Tabs.Navigator>
-        </View>
-      </NavigationContainer>
+      <View style={{ flex: 1 }}>
+        <Tabs.Navigator {...TabNavigatorConfig}>
+          <Tabs.Screen {...RouteConfigs["ListDecks"]} />
+          <Tabs.Screen {...RouteConfigs["AddDeck"]} />
+        </Tabs.Navigator>
+      </View>
     );
   }
 }
