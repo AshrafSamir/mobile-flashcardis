@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as Constants from "expo-constants";
 import { connect } from "react-redux";
-import { purple, white, gray } from "../utils/colors";
+import { purple, white, gray, black } from "../utils/colors";
 
 class DeckDetails extends Component {
   render() {
@@ -15,10 +15,12 @@ class DeckDetails extends Component {
         <Text style={styles.count}>{number} Cards</Text>
 
         <TouchableOpacity
-          onPress={()=>{navigation.navigate("NewQuestion", {
-            title: title,
-            number: number,
-          })}}
+          onPress={() => {
+            navigation.navigate("NewQuestion", {
+              title: title,
+              number: number,
+            });
+          }}
           style={styles.add}
         >
           <Text style={styles.buttonText}>Add Question</Text>
@@ -26,8 +28,16 @@ class DeckDetails extends Component {
 
         <View style={styles.separator} />
 
-        <TouchableOpacity style={styles.start}>
-          <Text style={styles.buttonText}>Start Quiz</Text>
+        <TouchableOpacity
+          style={styles.start}
+          onPress={() => {
+            navigation.navigate("Quiz", {
+              title: title,
+              number: number,
+            });
+          }}
+        >
+          <Text style={styles.buttonText2}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
     );
@@ -57,6 +67,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   add: {
+    borderRadius:10,
     width: "100%",
     backgroundColor: purple,
     padding: 10,
@@ -69,13 +80,18 @@ const styles = StyleSheet.create({
   },
   start: {
     width: "100%",
-
-    backgroundColor: purple,
+    borderRadius:10,
+    borderColor: black,
+    borderWidth: 1,
+    backgroundColor: white,
     padding: 10,
     alignItems: "center",
   },
   buttonText: {
     color: white,
+  },
+  buttonText2: {
+    color: black,
   },
 });
 
