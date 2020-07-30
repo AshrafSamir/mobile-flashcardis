@@ -11,7 +11,8 @@ class Quiz extends Component {
     questions: [],
     index: 0,
     size: 0,
-    view: false
+    view: false,
+    correct: 0,
   };
   componentDidMount() {
     const { route } = this.props;
@@ -19,12 +20,30 @@ class Quiz extends Component {
 
     getDecks().then((result) => {
       const data = JSON.parse(result);
+      console.log("data", data);
       this.setState({
         questions: data[title].questions,
         size: data[title].questions.length,
       });
     });
   }
+
+  handleCorrect = () => {
+    this.setState((prev) => {
+      return {
+        index: prev.index + 1,
+        correct: prev.correct + 1,
+      };
+    });
+  };
+  handleIncorrect = () => {
+    this.setState((prev) => {
+      return {
+        index: prev.index + 1,
+      };
+    });
+  };
+
   render() {
     const { route, navigation } = this.props;
     const { questions, size, index, view } = this.state;
@@ -34,24 +53,28 @@ class Quiz extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.topLeft}>
-          <Text>{`${index}/${size}`}</Text>
+          <Text>{`${index + 1}/${size}`}</Text>
         </View>
         <View style={styles.top}>
           <Text style={styles.title}>
-            {loading ?  null : view ? questions[index].question: questions[index].answer}
+            {loading
+              ? null
+              : view
+              ? questions[index].question
+              : questions[index].answer}
           </Text>
           <TouchableOpacity>
             <Text style={{ color: red }}>Answer</Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.correct}>
+        <TouchableOpacity onPress={this.handleCorrect} style={styles.correct}>
           <Text style={styles.buttonText}>Correct</Text>
         </TouchableOpacity>
 
         <View style={styles.separator} />
 
-        <TouchableOpacity style={styles.Incorrect}>
+        <TouchableOpacity onPress={this.handleIncorrect} style={styles.Incorrect}>
           <Text style={styles.buttonText}>Incorrect</Text>
         </TouchableOpacity>
       </View>
