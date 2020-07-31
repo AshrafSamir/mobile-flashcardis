@@ -51,6 +51,12 @@ class Quiz extends Component {
       };
     });
   };
+  handleStartOver = () => {
+    this.setState({
+      index: 0,
+      correct: 0,
+    });
+  };
 
   render() {
     const { route, navigation } = this.props;
@@ -60,11 +66,26 @@ class Quiz extends Component {
     if (index === size && size !== 0) {
       return (
         <View style={styles.container}>
-          <View style={styles.top}>
-            <Text
-              style={styles.title}
-            >{`You have answered ${correct} correct questions.`}</Text>
-          </View>
+          <Text
+            style={styles.title}
+          >{`You have answered ${correct} correct questions.`}</Text>
+
+          <TouchableOpacity onPress={this.handleStartOver} style={styles.add}>
+            <Text  style={styles.buttonText}>
+              Start Over
+            </Text>
+          </TouchableOpacity>
+
+          <View style={styles.separator} />
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack(null);
+            }}
+            style={styles.start}
+          >
+            <Text style={styles.buttonText2}>Go Back</Text>
+          </TouchableOpacity>
         </View>
       );
     } else if (size === 0) {
@@ -125,6 +146,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "30%",
     justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  start: {
+    width: "100%",
+    borderRadius: 10,
+    borderColor: gray,
+    borderWidth: 1,
+    backgroundColor: white,
+    padding: 10,
+    alignItems: "center",
+  },
+  add: {
+    borderRadius: 10,
+    width: "100%",
+    backgroundColor: gray,
+    padding: 10,
     alignItems: "center",
   },
   container: {

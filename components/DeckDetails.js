@@ -3,8 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as Constants from "expo-constants";
 import { connect } from "react-redux";
 import { purple, white, gray, black, red } from "../utils/colors";
-import { removeDeck, getDecks } from "../utils/api";
-import {  deleteDeck } from "../actions/decks";
+import {
+  removeDeck,
+  clearLocalNotification,
+  setLocalNotification,
+} from "../utils/api";
+import { deleteDeck } from "../actions/decks";
 
 class DeckDetails extends Component {
   handleDelte = () => {
@@ -43,6 +47,7 @@ class DeckDetails extends Component {
               title: title,
               number: number,
             });
+            clearLocalNotification().then(setLocalNotification);
           }}
         >
           <Text style={styles.buttonText2}>Start Quiz</Text>
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
   add: {
     borderRadius: 10,
     width: "100%",
-    backgroundColor: purple,
+    backgroundColor: gray,
     padding: 10,
     alignItems: "center",
   },

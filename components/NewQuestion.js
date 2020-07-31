@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   add: {
-    backgroundColor: purple,
+    backgroundColor: gray,
     padding: 10,
     alignItems: "center",
   },
