@@ -2,9 +2,17 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import * as Constants from "expo-constants";
 import { connect } from "react-redux";
-import { purple, white, gray, black } from "../utils/colors";
+import { purple, white, gray, black, red } from "../utils/colors";
+import { removeDeck, getDecks } from "../utils/api";
+import { receiveDecks } from "../actions/decks";
 
 class DeckDetails extends Component {
+  handleDelte = () => {
+    const { route, navigation, dispatch } = this.props;
+    const { title } = route.params;
+    removeDeck(title).then(dispatch(removeDeck(title)));
+    navigation.navigate("Tab");
+  };
   render() {
     const { route, navigation } = this.props;
     const { title, number } = route.params;
@@ -39,6 +47,9 @@ class DeckDetails extends Component {
         >
           <Text style={styles.buttonText2}>Start Quiz</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={this.handleDelte} style={{ margin: 20 }}>
+          <Text style={{ color: red }}>Delete Deck</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -67,7 +78,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   add: {
-    borderRadius:10,
+    borderRadius: 10,
     width: "100%",
     backgroundColor: purple,
     padding: 10,
@@ -80,8 +91,8 @@ const styles = StyleSheet.create({
   },
   start: {
     width: "100%",
-    borderRadius:10,
-    borderColor: black,
+    borderRadius: 10,
+    borderColor: gray,
     borderWidth: 1,
     backgroundColor: white,
     padding: 10,
@@ -91,7 +102,7 @@ const styles = StyleSheet.create({
     color: white,
   },
   buttonText2: {
-    color: black,
+    color: gray,
   },
 });
 

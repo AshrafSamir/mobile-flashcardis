@@ -1,4 +1,9 @@
-import { RECEIVE_DECKS, ADD_DECK , ADD_QUESTION} from "../actions/decks";
+import {
+  RECEIVE_DECKS,
+  ADD_DECK,
+  ADD_QUESTION,
+  DELETE_DECK,
+} from "../actions/decks";
 
 function decks(state = {}, action) {
   switch (action.type) {
@@ -17,10 +22,18 @@ function decks(state = {}, action) {
         ...state,
         [action.question.title]: {
           ...[action.question.title],
-          questions: state[action.question.title].questions.concat(action.question.info) 
-        }
-
-      }
+          questions: state[action.question.title].questions.concat(
+            action.question.info
+          ),
+        },
+      };
+    case DELETE_DECK:
+      let data = state;
+      data[action.deck] = undefined;
+      delete data[action.deck];
+      return {
+        ...data,
+      };
     default:
       return state;
   }

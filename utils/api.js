@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 import { data, DECKS_STORAGE_KEY } from "./data";
-import decks from "../reducers";
+
 
 export function saveIntialDataToStoarge() {
   return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
@@ -42,4 +42,13 @@ export function addCardToDeck( title, card ) {
     };
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(newData));
   });
+}
+export function removeDeck (title) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results)
+      data[title] = undefined
+      delete data[title]
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+    })
 }

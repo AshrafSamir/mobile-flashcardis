@@ -11,8 +11,9 @@ class Quiz extends Component {
     questions: [],
     index: 0,
     size: 0,
-    view: false,
+    view: true,
     correct: 0,
+    value: "Answer",
   };
   componentDidMount() {
     const { route } = this.props;
@@ -43,42 +44,73 @@ class Quiz extends Component {
       };
     });
   };
+  handleViewAnswer = () => {
+    this.setState((prev) => {
+      return {
+        view: !prev.view,
+      };
+    });
+  };
 
   render() {
     const { route, navigation } = this.props;
-    const { questions, size, index, view } = this.state;
+    const { questions, size, index, view, correct, value } = this.state;
     const { title } = route.params;
     const loading = questions.length === 0;
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.topLeft}>
-          <Text>{`${index + 1}/${size}`}</Text>
+    if (index === size && size !== 0) {
+      return (
+        <View style={styles.container}>
+          <View style={styles.top}>
+            <Text
+              style={styles.title}
+            >{`You have answered ${correct} correct questions.`}</Text>
+          </View>
         </View>
-        <View style={styles.top}>
-          <Text style={styles.title}>
-            {loading
-              ? null
-              : view
-              ? questions[index].question
-              : questions[index].answer}
-          </Text>
-          <TouchableOpacity>
-            <Text style={{ color: red }}>Answer</Text>
+      );
+    } else if (size === 0) {
+      return (
+        <View style={styles.container}>
+          <View style={styles.top}>
+            <Text
+              style={styles.title}
+            >{`Add questions first to start the Quiz.`}</Text>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <View style={styles.topLeft}>
+            <Text>{`${index + 1}/${size}`}</Text>
+          </View>
+          <View style={styles.top}>
+            <Text style={styles.title}>
+              {loading
+                ? null
+                : view
+                ? questions[index].question
+                : questions[index].answer}
+            </Text>
+            <TouchableOpacity onPress={this.handleViewAnswer}>
+              <Text style={{ color: red }}>{view ? `Answer` : `Question`}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity onPress={this.handleCorrect} style={styles.correct}>
+            <Text style={styles.buttonText}>Correct</Text>
+          </TouchableOpacity>
+
+          <View style={styles.separator} />
+
+          <TouchableOpacity
+            onPress={this.handleIncorrect}
+            style={styles.Incorrect}
+          >
+            <Text style={styles.buttonText}>Incorrect</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity onPress={this.handleCorrect} style={styles.correct}>
-          <Text style={styles.buttonText}>Correct</Text>
-        </TouchableOpacity>
-
-        <View style={styles.separator} />
-
-        <TouchableOpacity onPress={this.handleIncorrect} style={styles.Incorrect}>
-          <Text style={styles.buttonText}>Incorrect</Text>
-        </TouchableOpacity>
-      </View>
-    );
+      );
+    }
   }
 }
 
