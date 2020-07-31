@@ -31,16 +31,14 @@ class AddDeck extends Component {
 
     saveDeckTitle({ title }).then(() => {
       dispatch(addDecks(deckName));
-    });
-
-    navigation.navigate("DeckDetails", {
-      title: title,
-      number: 0,
-    });
-
-    this.setState({
-      deckName: {},
-      title: "",
+      this.setState({
+        deckName: {},
+        title: "",
+      });
+      navigation.navigate("DeckDetails", {
+        title: title,
+        number: 0,
+      });
     });
   };
   render() {

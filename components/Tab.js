@@ -54,9 +54,7 @@ const TabNavigatorConfig = {
 const Tabs = createMaterialTopTabNavigator();
 
 export default class Tab extends Component {
-  componentDidMount() {
-    saveIntialDataToStoarge();
-  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>

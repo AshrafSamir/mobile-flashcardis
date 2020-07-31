@@ -35,18 +35,17 @@ class NewQuestion extends Component {
         answer: answer,
       },
     };
-    const card = obj.info
-    addCardToDeck( title, card ).then(() => {
+    const card = obj.info;
+    addCardToDeck(title, card).then(() => {
       dispatch(addQuestion(obj));
-    });
-
-    this.setState({
-      answer: "",
-      question: "",
-    });
-    navigation.navigate("DeckDetails", {
-      title: title,
-      number: number + 1,
+      this.setState({
+        answer: "",
+        question: "",
+      });
+      navigation.navigate("DeckDetails", {
+        title: title,
+        number: number + 1,
+      });
     });
   };
   render() {

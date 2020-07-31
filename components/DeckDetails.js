@@ -4,13 +4,13 @@ import * as Constants from "expo-constants";
 import { connect } from "react-redux";
 import { purple, white, gray, black, red } from "../utils/colors";
 import { removeDeck, getDecks } from "../utils/api";
-import { receiveDecks } from "../actions/decks";
+import {  deleteDeck } from "../actions/decks";
 
 class DeckDetails extends Component {
   handleDelte = () => {
     const { route, navigation, dispatch } = this.props;
     const { title } = route.params;
-    removeDeck(title).then(dispatch(removeDeck(title)));
+    removeDeck(title).then(dispatch(deleteDeck(title)));
     navigation.navigate("Tab");
   };
   render() {

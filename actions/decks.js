@@ -24,7 +24,7 @@ export function addDecks(deck) {
   };
 }
 
-export function removeDeck(deck) {
+export function deleteDeck(deck) {
   return {
     type: DELETE_DECK,
     deck,

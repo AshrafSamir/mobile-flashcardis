@@ -34,7 +34,7 @@ class ListDecks extends Component {
         <View>
           {loading
             ? null
-            : titles.map((key) => (
+            : keys.map((key) => (
                 <DeckLink
                   key={key}
                   deck={key}

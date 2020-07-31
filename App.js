@@ -25,7 +25,6 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
 
 export default class App extends Component {
   componentDidMount() {
-    saveIntialDataToStoarge();
   }
   render() {
     return (
