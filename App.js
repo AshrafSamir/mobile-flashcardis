@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { View, StatusBar } from "react-native";
 import reducer from "./reducers";
 import { purple } from "./utils/colors";
-import { setLocalNotification } from "./utils/api";
+import { setLocalNotification  } from "./utils/api";
 import middleware from "./middleware";
 import * as Constants from "expo-constants";
 import StackNav from "./components/StackNav";

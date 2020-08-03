@@ -12,8 +12,8 @@ class AddDeck extends Component {
     deckName: {},
     title: "",
   };
-  handleInput = (e) => {
-    const text = e.target.value;
+  handleInput = (text) => {
+    
     const obj = {
       [text]: {
         title: text,
@@ -51,7 +51,7 @@ class AddDeck extends Component {
         <TextInput
           value={title}
           style={styles.textInput}
-          onChange={this.handleInput}
+          onChangeText={this.handleInput}
           placeholder={"    Deck Title"}
         />
         <View style={styles.separator} />

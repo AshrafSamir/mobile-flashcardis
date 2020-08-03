@@ -34,6 +34,7 @@ class Quiz extends Component {
       return {
         index: prev.index + 1,
         correct: prev.correct + 1,
+        view: true,
       };
     });
   };
@@ -41,6 +42,7 @@ class Quiz extends Component {
     this.setState((prev) => {
       return {
         index: prev.index + 1,
+        view: true,
       };
     });
   };
@@ -55,6 +57,7 @@ class Quiz extends Component {
     this.setState({
       index: 0,
       correct: 0,
+      view: true,
     });
   };
 
@@ -71,9 +74,7 @@ class Quiz extends Component {
           >{`You have answered ${correct} correct questions.`}</Text>
 
           <TouchableOpacity onPress={this.handleStartOver} style={styles.add}>
-            <Text  style={styles.buttonText}>
-              Start Over
-            </Text>
+            <Text style={styles.buttonText}>Start Over</Text>
           </TouchableOpacity>
 
           <View style={styles.separator} />
@@ -113,7 +114,9 @@ class Quiz extends Component {
                 : questions[index].answer}
             </Text>
             <TouchableOpacity onPress={this.handleViewAnswer}>
-              <Text style={{ color: red }}>{view ? `Answer` : `Question`}</Text>
+              <Text style={{ color: red }}>
+                {view ? `Show Answer` : `Question`}
+              </Text>
             </TouchableOpacity>
           </View>
 

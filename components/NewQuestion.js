@@ -12,14 +12,13 @@ class NewQuestion extends Component {
     question: "",
     answer: "",
   };
-  handleQuestion = (e) => {
-    const question = e.target.value;
+  handleQuestion = (question) => {
     this.setState({
       question: question,
     });
   };
-  handleAnswer = (e) => {
-    const answer = e.target.value;
+  handleAnswer = (answer) => {
+    
     this.setState({
       answer: answer,
     });
@@ -56,14 +55,14 @@ class NewQuestion extends Component {
         <TextInput
           value={question}
           style={styles.textInput}
-          onChange={this.handleQuestion}
+          onChangeText={this.handleQuestion}
           placeholder={"   Question"}
         />
         <Text style={styles.title}>Your answer</Text>
         <TextInput
           value={answer}
           style={styles.textInput}
-          onChange={this.handleAnswer}
+          onChangeText={this.handleAnswer}
           placeholder={"   Answer"}
         />
         <View style={styles.separator} />

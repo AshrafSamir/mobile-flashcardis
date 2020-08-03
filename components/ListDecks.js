@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  
-} from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { receiveDecks } from "../actions/decks";
 import { getDecks } from "../utils/api";
@@ -17,17 +12,18 @@ class ListDecks extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     getDecks().then((results) => {
-      dispatch(receiveDecks(JSON.parse(results)));
-      this.setState({
-        titles: Object.keys(JSON.parse(results)),
-      });
+      if (results !== null) {
+        dispatch(receiveDecks(JSON.parse(results)));
+        this.setState({
+          titles: Object.keys(JSON.parse(results)),
+        });
+      }
     });
   }
 
   render() {
     const { decks, keys, loading } = this.props;
     const { titles } = this.state;
-    
 
     return (
       <ScrollView style={styles.container}>
