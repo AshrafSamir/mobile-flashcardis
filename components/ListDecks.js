@@ -12,18 +12,15 @@ class ListDecks extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     getDecks().then((results) => {
-      if (results !== null) {
+      console.log("testasd", JSON.parse(results));
+      if (JSON.parse(results) !== null) {
         dispatch(receiveDecks(JSON.parse(results)));
-        this.setState({
-          titles: Object.keys(JSON.parse(results)),
-        });
       }
     });
   }
 
   render() {
     const { decks, keys, loading } = this.props;
-    const { titles } = this.state;
 
     return (
       <ScrollView style={styles.container}>
